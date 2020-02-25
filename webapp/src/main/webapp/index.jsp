@@ -1,5 +1,5 @@
 <h1>Hello Team!</h1>
 <h1> Welcome to DevOps Technologies !!! </h1>
 
-<h2>Simple CI/CD pipeline with ansible</h2> 
-<h3> - Deploy a war file on Docker's - tomcat container</h3>
+<h2>Simple CI/CD pipeline with tomcat</h2> 
+<h3> - - - - - - - - - - - - - - - - - - - - - - - - -</h3>

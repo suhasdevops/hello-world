@@ -1,0 +1,21 @@
+pipeline {
+	agent any
+	stages {
+		stage('Git Checkout') {
+			steps {
+				git 'https://github.com/suhasdevops/hello-world.git'
+				//get the code from github
+			}
+		}
+		stage('Mvn Package') {
+			steps {
+				sh script: 'mvn clean package'
+			}
+		}
+		stage('Buid Docker Image') {
+			steps {
+			    sh script: 'sh dimgbuild.sh'
+			}
+		}
+	}
+}

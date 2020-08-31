@@ -1,0 +1,28 @@
+properties([parameters([choice(choices: 'master\nfeature-1', description: 'Select appropriate branch to build', name: 'branch')])])
+
+node {
+    stage('Git Checkout') {
+        echo "Pulling changes from the branch ${params.branch}"
+        git url: "https://github.com/suhasdevops/hello-world.git", branch: "${params.branch}"
+    }
+    stage('Clean') {
+        sh "mvn clean"
+              //clean the previous artifacts
+        }   
+    stage('Package') {
+        sh "mvn package"
+              //package the source code
+        }
+    stage('Deploy') {
+              //deploy to tomcat container
+        deploy adapters: [tomcat9(credentialsId: 'tomcat_id', path: '', url: 'http://192.168.30.11:8090')], contextPath: null, onFailure: false, war: '**/*.war'
+        echo "I done it :)"
+          }    
+}
+
+##Note:################################################################
+# Configure choice parameter in jenkins job 
+# -> General -> This project is parameterized -> Add Parameter 
+# -> Select Choice Parameter -> and add all the fields
+# Name and Choices are similer to jenkinsfiles parameter
+#######################################################################

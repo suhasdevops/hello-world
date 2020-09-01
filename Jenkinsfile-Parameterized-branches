@@ -19,10 +19,3 @@ node {
         echo "I done it :)"
           }    
 }
-
-##Note:################################################################
-# Configure choice parameter in jenkins job 
-# -> General -> This project is parameterized -> Add Parameter 
-# -> Select Choice Parameter -> and add all the fields
-# Name and Choices are similer to jenkinsfiles parameter
-#######################################################################

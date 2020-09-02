@@ -1,0 +1,31 @@
+properties([parameters([choice(choices: 'master\nfeature-1', description: 'Select appropriate branch to build', name: 'branch')])])
+
+node {
+    stage('Git Checkout') {
+        echo "Pulling changes from the branch ${params.branch}"
+        git url: "https://github.com/suhasdevops/hello-world.git", branch: "${params.branch}"
+    }
+    stage('Clean') {
+        sh "mvn clean"
+              //clean the previous artifacts
+        }   
+    stage('Package') {
+        sh "mvn package"
+              //package the source code
+        }
+    stage('Deploy') {
+              //deploy to tomcat container
+        deploy adapters: [tomcat9(credentialsId: 'tomcat_id', path: '', url: 'http://192.168.30.11:9990/')], contextPath: null, onFailure: false, war: '**/*.war'
+        echo "I done it :)"
+          }
+    stage('Email Notify') {
+              //send email notification
+        emailext attachLog: true, body: '''Hello, Jenkins job is ran for the tomcat deployment.
+
+$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+Check console output at $BUILD_URL to view the results.
+
+Thanks.''', replyTo: 'suhasdevops@gmail.com', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'suhaskadam91@gmail.com'
+    }
+}

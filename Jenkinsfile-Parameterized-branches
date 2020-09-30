@@ -15,7 +15,7 @@ node {
         }
     stage('Deploy') {
               //deploy to tomcat container
-        deploy adapters: [tomcat9(credentialsId: 'tomcat_id', path: '', url: 'http://192.168.30.11:8090')], contextPath: null, onFailure: false, war: '**/*.war'
+        deploy adapters: [tomcat9(credentialsId: 'tomcat_id', path: '', url: 'http://192.168.30.11:8084/')], war: '**/*.war'
         echo "I done it :)"
           }    
 }
